@@ -1,6 +1,6 @@
 //
-//  BrowseOverflowTests.m
-//  BrowseOverflowTests
+//  PersonTests.m
+//  BrowseOverflow
 //
 //  Created by Vasile Croitoru on 24/04/16.
 //  Copyright © 2016 Vasile Croitoru. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface BrowseOverflowTests : XCTestCase
+@interface PersonTests : XCTestCase
 
 @end
 
-@implementation BrowseOverflowTests
+@implementation PersonTests
 
 - (void)setUp {
     [super setUp];
