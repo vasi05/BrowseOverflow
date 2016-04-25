@@ -7,33 +7,76 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "Question.h"
+#import "Answer.h"
 
-@interface QuestionTests : XCTestCase
+@interface QuestionTests : XCTestCase{
+    Question *question;
+    Answer *lowScore;
+    Answer *highScore;
+}
 
 @end
 
 @implementation QuestionTests
 
-- (void)setUp {
+-(void)setUp{
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    question = [[Question alloc] init];
+    question.date = [NSDate distantPast];
+    question.title = @"Do Iphones also dream of electric sheep";
+    question.score = @42;
+    
+    Answer *accepted = [[Answer alloc] init];
+    accepted.score = @1;
+    accepted.accepted = YES;
+    [question addAnswer:accepted];
+    
+    lowScore = [[Answer alloc] init];
+    lowScore.score = @-4;
+    [question addAnswer:lowScore];
+    
+    highScore = [[Answer alloc] init];
+    highScore.score = @4;
+    [question addAnswer:highScore];
+    
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+-(void)tearDown{
+    question = nil;
+    highScore = nil;
+    lowScore = nil;
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+-(void)testQuestionCanHaveAnswerAdded{
+    Answer * myAnswer = [[Answer alloc] init];
+    XCTAssertNoThrow([question addAnswer:myAnswer],@"must be able to add answer");
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+-(void)testAcceptedAnswerIsFirst{
+    XCTAssertTrue([question.answers[0] isAccepted], @"Accepted answer comes first");
+}
+
+-(void)testHighScoreAnswerBeforeLow{
+    NSArray *answears = question.answers;
+    NSInteger highIndex = [answears indexOfObject:highScore];
+    NSInteger lowIndex = [answears indexOfObject:lowScore];
+    XCTAssertTrue(lowIndex < highIndex, @"high-scoring answer comes first");
+}
+
+-(void)testQuestionHasADate{
+    NSDate *testDate = [NSDate distantPast];
+    question.date = testDate;
+    XCTAssertEqualObjects(question.date, testDate, @"question need to provide its date");
+}
+
+-(void)testQuestionsKeepScore{
+    XCTAssertEqualObjects(question.score, @42, @"question need a numeric score");
+}
+
+-(void)testQuestionHasATitle{
+    XCTAssertEqualObjects(question.title, @"Do Iphones also dream of electric sheep", @"question should know its title");
 }
 
 @end

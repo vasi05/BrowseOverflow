@@ -10,4 +10,9 @@
 
 @interface Person : NSObject
 
+@property (readonly) NSString *name;
+@property (readonly) NSURL *avatarURL;
+
+-(instancetype)initWithName:(NSString *)newName avatarLocation:(NSString *)avatarLocation;
+
 @end

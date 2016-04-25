@@ -9,5 +9,14 @@
 #import "Person.h"
 
 @implementation Person
+@synthesize name,avatarURL;
+
+-(instancetype)initWithName:(NSString *)newName avatarLocation:(NSString *)avatarLocation{
+    if(self == [super init]){
+        name = newName;
+        avatarURL = [NSURL URLWithString:avatarLocation];
+    }
+    return self;
+}
 
 @end
